@@ -30,13 +30,13 @@ To run this portfolio locally or contribute to it, follow these steps:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/[your-username]/[your-repo-name].git
+   git clone https://github.com/G0dZilLAaA/Portfolio.git
    ```
    Replace `[your-username]` and `[your-repo-name]` with your GitHub username and repository name.
 
 2. **Navigate to the Project Directory**:
    ```bash
-   cd [your-repo-name]
+   cd Portfolio
    ```
 
 3. **Open the Project**:
