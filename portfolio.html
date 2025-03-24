@@ -3,57 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Portfolio</title>
+    <title>Mohit Kumawat - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>Mohit Kumawat</h1>
-        <p>Aspiring Software Developer</p>
+        <div class="header-content">
+            <h1>Mohit Kumawat</h1>
+            <p>Aspiring Software Developer</p>
+            <button id="theme-toggle" aria-label="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+        </div>
     </header>
     <nav>
         <ul>
-            <li><a href="#about">About Me</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#achievements">Achievements</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><button class="nav-btn"><a href="#about">About Me</a></button></li>
+            <li><button class="nav-btn"><a href="#skills">Skills</a></button></li>
+            <li><button class="nav-btn"><a href="#projects">Projects</a></button></li>
+            <li><button class="nav-btn"><a href="#achievements">Achievements</a></button></li>
+            <li><button class="nav-btn"><a href="#contact">Contact</a></button></li>
         </ul>
     </nav>
-    <section id="about">
+
+    <section id="about" class="fade-in">
         <h2>About Me</h2>
-        <p>Currently pursuing B.Tech in Computer Science and Engineering at IIIT Guwahati.</p>
+        <p>I'm a B.Tech student in Computer Science and Engineering at IIIT Guwahati, passionate about Data Structures, Competitive Programming, and Full-Stack Development.</p>
         <h3>Education</h3>
         <ul>
-            <li>B.Tech in Computer Science and Engineering, IIIT Guwahati (2023 - Present)</li>
-            <li>Intermediate, Satyam S S Sr. Sec. School (2021, 95%)</li>
-            <li>Matriculation, Satyam S S Sr. Sec. School (2023, 90%)</li>
+            <li>B.Tech in Computer Science and Engineering, Indian Institute of Information Technology, Guwahati (2023 - Present, CPI: 7)</li>
+            <li>Intermediate, Satyam S S Sr. Sec. School, R.B.S.E (2021, 95%)</li>
+            <li>Matriculation, Satyam S S Sr. Sec. School, R.B.S.E (2023, 90%)</li>
         </ul>
-        <h3>Skills</h3>
+        <h3>Positions of Responsibility</h3>
         <ul>
-            <li>Languages: Java, Python, C/C++</li>
-            <li>Tools: Git, VS Code, IntelliJ IDEA, Arduino</li>
-            <li>Databases: MySQL</li>
+            <li>Event Management Core Team Member, Entropy, Annual Technical Fest IIITG</li>
+            <li>Event Management Core Team Member, Yuvaan, Annual Cultural Fest, IIITG</li>
+            <li>Coordinator, Reading Club - IIIT Guwahati</li>
+            <li>Core Team Member, Technocrates, Tech Club, IIITG</li>
         </ul>
     </section>
-    <section id="projects">
-        <h2>Projects</h2>
-        <p>List your projects here with descriptions.</p>
+
+    <section id="skills" class="fade-in">
+        <h2>Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">Java</div>
+            <div class="skill-card">Python</div>
+            <div class="skill-card">C/C++</div>
+            <div class="skill-card">Git</div>
+            <div class="skill-card">MySQL</div>
+            <div class="skill-card">VS Code</div>
+            <div class="skill-card">IntelliJ IDEA</div>
+            <div class="skill-card">Arduino</div>
+            <div class="skill-card">Data Structures</div>
+            <div class="skill-card">Algorithms</div>
+        </div>
+        <p><strong>Areas of Interest:</strong> Data Structures and Algorithms, Competitive Programming, Full-Stack Development, AI/ML</p>
+        <p><strong>Coursework:</strong> Data Structures, Algorithms, Object-Oriented Programming, Database Management Systems, AI</p>
     </section>
-    <section id="achievements">
+
+    <section id="projects" class="fade-in">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>AI-Based Lunar Lander Training</h3>
+                <p>Trained a lunar lander using evolutionary algorithms for optimized landing.</p>
+                <button class="btn"><a href="https://github.com/G0dZilLAaA/lunar_lander_training_model" target="_blank">View Code</a></button>
+            </div>
+            <div class="project-card">
+                <h3>Library Management System</h3>
+                <p>A Java and MySQL-based system for managing library operations.</p>
+                <button class="btn"><a href="https://github.com/G0dZilLAaA/library-management" target="_blank">View Project</a></button>
+            </div>
+            <div class="project-card">
+                <h3>Arduino-Based Bluetooth RC Car</h3>
+                <p>An RC car with obstacle detection controlled via Bluetooth.</p>
+                <button class="btn"><a href="https://github.com/G0dZilLAaA/aurdino-project" target="_blank">View Project</a></button>
+            </div>
+            <div class="project-card">
+                <h3>Personal Portfolio Website</h3>
+                <p>This responsive website built with HTML, CSS, and JavaScript.</p>
+                <button class="btn"><a href="https://github.com/G0dZilLAaA/Portfolio" target="_blank">View Code</a></button>
+            </div>
+        </div>
+    </section>
+
+    <section id="achievements" class="fade-in">
         <h2>Achievements & Certifications</h2>
         <ul>
-            <li>Completed AI essentials Course - Coursera</li>
+            <li>Solved 500+ coding problems across various platforms</li>
+            <li>Completed AI Essentials Course - Coursera</li>
             <li>Completed Cybersecurity Course - Coursera</li>
             <li>Secured All India Rank of 24000 in JEE Advanced 2023</li>
             <li>Secured All India Rank of 26000 in JEE Mains 2023</li>
         </ul>
     </section>
-    <footer id="contact">
+
+    <footer id="contact" class="fade-in">
         <h2>Contact</h2>
-        <p>Email: mohit.kumawat23b@iiitg.ac.in</p>
+        <p>Email: <a href="mailto:mohit.kumawat23b@iiitg.ac.in">mohit.kumawat23b@iiitg.ac.in</a></p>
         <p>Phone: +91-9468844484</p>
+        <div class="social-links">
+            <button class="social-btn"><a href="https://www.linkedin.com/in/mohit-kumawat-583792289" target="_blank"><i class="fab fa-linkedin"></i></a></button>
+            <button class="social-btn"><a href="https://github.com/G0dZilLAaA" target="_blank"><i class="fab fa-github"></i></a></button>
+            <button class="social-btn"><a href="https://leetcode.com/u/godzi_lla" target="_blank"><i class="fas fa-code"></i></a></button>
+        </div>
+        <form id="contact-form" action="http://localhost:8080/portfolio/ContactServlet" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" required></textarea>
+            <button type="submit" class="btn">Send Message</button>
+        </form>
     </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
