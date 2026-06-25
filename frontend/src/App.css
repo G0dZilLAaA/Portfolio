@@ -11,10 +11,10 @@ body {
 }
 
 .container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 20px;
 }
@@ -36,4 +36,53 @@ button {
   color: white;
   font-size: 1rem;
   cursor: pointer;
+}
+
+.muted {
+  color: #94a3b8;
+}
+
+.error {
+  color: #f87171;
+}
+
+.card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 24px 32px;
+  text-align: center;
+  max-width: 420px;
+}
+
+.card h2 {
+  margin: 8px 0 4px;
+}
+
+.card .title {
+  color: #60a5fa;
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: #4ade80;
+  margin-bottom: 8px;
+}
+
+.skills {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.skills li {
+  background: #334155;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
 }

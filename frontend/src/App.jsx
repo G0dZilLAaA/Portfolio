@@ -1,12 +1,10 @@
 import "./App.css";
+import Game from "./game/Game";
 
 function App() {
   return (
     <div className="container">
-      <h1>My First Full Stack Project</h1>
-      <p>React Frontend + Node Backend deployed on Render</p>
-
-      <button>Get Started</button>
+      <Game />
     </div>
   );
 }

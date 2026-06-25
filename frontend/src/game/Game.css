@@ -1,0 +1,400 @@
+/* Full-screen game — escapes the constrained #root layout. */
+.game2d {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #0b1026;
+  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+}
+
+.game2d-scene {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ----- Door swing animation ----- */
+.game2d-door {
+  transition: transform 1s ease;
+  transform-box: fill-box;
+}
+.game2d-door.is-open {
+  /* Swing inward by flattening toward the hinge. */
+  transform: scaleX(0.16) skewY(6deg);
+}
+
+/* ----- Doorbell button pulse ----- */
+.game2d-bell-btn {
+  animation: bell-pulse 1.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes bell-pulse {
+  0%, 100% { filter: drop-shadow(0 0 2px #ffd34d); }
+  50% { filter: drop-shadow(0 0 12px #ffd34d); }
+}
+
+/* ----- Sound waves ----- */
+.game2d-waves path {
+  opacity: 0;
+  animation: wave-out 1.6s ease-out infinite;
+}
+.game2d-waves path:nth-child(2) { animation-delay: 0.25s; }
+.game2d-waves path:nth-child(3) { animation-delay: 0.5s; }
+@keyframes wave-out {
+  0% { opacity: 0; }
+  30% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+/* ----- Intro overlay ----- */
+.game2d-overlay,
+.game2d-result {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: rgba(7, 10, 25, 0.72);
+  backdrop-filter: blur(3px);
+  text-align: center;
+  padding: 24px;
+}
+
+.game2d-h1 {
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: #fff;
+  margin: 0;
+  letter-spacing: 1px;
+  text-shadow: 0 0 24px rgba(232, 79, 140, 0.6);
+}
+
+.game2d-sub,
+.game2d-result-text {
+  color: #cbd5e1;
+  font-size: clamp(1rem, 2.4vw, 1.4rem);
+  margin: 0;
+}
+
+.game2d-hint {
+  color: #7c869c;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.game2d-cta {
+  margin-top: 8px;
+  padding: 16px 34px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1030;
+  background: linear-gradient(135deg, #ffd34d, #ffb01f);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(255, 176, 31, 0.4);
+  transition: transform 0.12s ease;
+}
+.game2d-cta:hover { transform: translateY(-2px) scale(1.03); }
+.game2d-cta:active { transform: scale(0.97); }
+.game2d-cta.small { font-size: 1rem; padding: 12px 26px; }
+
+/* ----- Choice prompt (bottom) ----- */
+.game2d-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  transform: translateX(-50%);
+  width: min(720px, 92vw);
+  text-align: center;
+}
+.game2d-prompt-text {
+  color: #fff;
+  font-size: clamp(1rem, 2.6vw, 1.5rem);
+  font-weight: 600;
+  margin: 0 0 16px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+}
+.game2d-choices {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.game2d-choice {
+  flex: 1 1 220px;
+  max-width: 320px;
+  padding: 18px 24px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-radius: 16px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: transform 0.12s ease, box-shadow 0.2s ease;
+}
+.game2d-choice.open {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: #22c55e;
+}
+.game2d-choice.open:hover {
+  background: rgba(34, 197, 94, 0.5);
+  box-shadow: 0 0 24px rgba(34, 197, 94, 0.5);
+}
+.game2d-choice.ignore {
+  background: rgba(239, 68, 68, 0.22);
+  border-color: #ef4444;
+}
+.game2d-choice.ignore:hover {
+  background: rgba(239, 68, 68, 0.48);
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.5);
+}
+.game2d-choice:active { transform: scale(0.97); }
+
+/* ----- Mute toggle (bottom-right; top corners hold mood badges) ----- */
+.game2d-mute {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  width: 48px;
+  height: 48px;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+}
+.game2d-mute:hover { background: rgba(255, 255, 255, 0.25); }
+
+/* ----- Mood badges in the top corners ----- */
+.game2d-mood {
+  position: absolute;
+  top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(7, 10, 25, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+.game2d-mood.left { left: 18px; }
+.game2d-mood.right { right: 18px; }
+.game2d-mood-emoji { font-size: 1.7rem; line-height: 1; }
+.game2d-mood-name { color: #e2e8f0; font-weight: 600; font-size: 0.95rem; }
+
+/* ----- Tears (crying) ----- */
+.game2d-tears ellipse {
+  animation: tear-drop 1.1s ease-in infinite;
+}
+.game2d-tears ellipse:nth-child(2) { animation-delay: 0.45s; }
+@keyframes tear-drop {
+  0% { transform: translateY(0); opacity: 0; }
+  25% { opacity: 1; }
+  100% { transform: translateY(16px); opacity: 0; }
+}
+
+/* ----- Rain ----- */
+.game2d-rain {
+  animation-name: rain-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes rain-fall {
+  from { transform: translateY(-40px); }
+  to { transform: translateY(760px); }
+}
+
+/* ----- Lightning ----- */
+.game2d-flash { animation: flash 0.6s ease-out; }
+@keyframes flash {
+  0% { opacity: 0; }
+  8% { opacity: 0.9; }
+  20% { opacity: 0.1; }
+  34% { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+.game2d-bolt {
+  filter: drop-shadow(0 0 8px #fffbe0);
+  animation: bolt 0.6s steps(1);
+}
+@keyframes bolt {
+  0%, 100% { opacity: 0; }
+  8%, 34% { opacity: 1; }
+  20% { opacity: 0.2; }
+}
+
+/* ----- Door-break screen shake ----- */
+.game2d.is-breaking { animation: shake 0.45s ease-in-out 3; }
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-9px, 5px); }
+  50% { transform: translate(9px, -5px); }
+  75% { transform: translate(-6px, -3px); }
+}
+
+/* ----- Inside-scene buttons ----- */
+.game2d-choice.accept {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: #22c55e;
+}
+.game2d-choice.accept:hover {
+  background: rgba(34, 197, 94, 0.5);
+  box-shadow: 0 0 24px rgba(34, 197, 94, 0.5);
+}
+.game2d-choice.throw {
+  background: rgba(239, 68, 68, 0.22);
+  border-color: #ef4444;
+}
+.game2d-choice.throw:hover {
+  background: rgba(239, 68, 68, 0.48);
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.5);
+}
+.game2d-choice.hit {
+  background: rgba(245, 158, 11, 0.25);
+  border-color: #f59e0b;
+}
+.game2d-choice.hit:hover {
+  background: rgba(245, 158, 11, 0.5);
+  box-shadow: 0 0 24px rgba(245, 158, 11, 0.5);
+}
+.game2d-choice.goaway {
+  background: rgba(148, 163, 184, 0.2);
+  border-color: #94a3b8;
+}
+.game2d-choice.goaway:hover {
+  background: rgba(148, 163, 184, 0.45);
+  box-shadow: 0 0 24px rgba(148, 163, 184, 0.45);
+}
+
+/* ----- Hit effect (random weapon + impact) ----- */
+.game2d-hit-weapon {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hit-swing 1.1s ease-in;
+}
+@keyframes hit-swing {
+  0% { transform: translate(-70px, -90px) rotate(-45deg); opacity: 0; }
+  30% { opacity: 1; }
+  52% { transform: translate(0, 0) rotate(12deg); }
+  100% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+}
+.game2d-hit-impact {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hit-impact 1.1s ease-out;
+}
+@keyframes hit-impact {
+  0%, 42% { opacity: 0; transform: scale(0.2); }
+  56% { opacity: 1; transform: scale(1.15); }
+  82% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ----- "Go away" relocation — Mohit's random entrance ----- */
+.game2d-enter-run { animation: enter-run 1.1s ease-out 0.4s both; }
+.game2d-enter-sky { animation: enter-sky 1.0s cubic-bezier(0.5, 0, 0.85, 1) 0.4s both; }
+.game2d-enter-ground { animation: enter-ground 0.9s ease-out 0.4s both; }
+@keyframes enter-run {
+  from { transform: translateX(820px); }
+  to { transform: translateX(0); }
+}
+@keyframes enter-sky {
+  0% { transform: translateY(-840px); }
+  78% { transform: translateY(14px); }
+  100% { transform: translateY(0); }
+}
+@keyframes enter-ground {
+  0% { transform: translateY(480px); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ----- Relocation caption ----- */
+.game2d-caption {
+  position: absolute;
+  top: 14%;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 90vw;
+  text-align: center;
+  background: rgba(7, 10, 25, 0.72);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: clamp(0.95rem, 2.4vw, 1.3rem);
+  backdrop-filter: blur(4px);
+  animation: caption-in 0.3s ease;
+}
+.game2d-caption.alarm {
+  background: rgba(120, 20, 20, 0.82);
+  animation: caption-in 0.3s ease, caption-shake 0.4s ease 0.3s;
+}
+@keyframes caption-in {
+  from { opacity: 0; transform: translate(-50%, -8px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+@keyframes caption-shake {
+  0%, 100% { transform: translate(-50%, 0); }
+  25% { transform: translate(calc(-50% - 6px), 0); }
+  75% { transform: translate(calc(-50% + 6px), 0); }
+}
+
+/* ----- Gift counter (top-center HUD) ----- */
+.game2d-counter {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(7, 10, 25, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  padding: 6px 16px;
+  color: #ffd1e6;
+  font-weight: 600;
+  font-size: 0.95rem;
+  backdrop-filter: blur(4px);
+}
+
+/* ----- Gift pop-in ----- */
+.game2d-gift-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: gift-pop 0.4s ease-out;
+}
+@keyframes gift-pop {
+  0% { transform: scale(0.2); opacity: 0; }
+  60% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* ----- Restart button (bottom-left, inside scene) ----- */
+.game2d-restart {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  width: 48px;
+  height: 48px;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+}
+.game2d-restart:hover { background: rgba(255, 255, 255, 0.25); }
+
+/* ----- Result ----- */
+.game2d-tbc {
+  color: #ffd34d;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 0;
+}
