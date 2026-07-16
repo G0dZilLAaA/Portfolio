@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import ProjectForm from "../../components/admin/ProjectForm";
 import ProjectRow from "../../components/admin/ProjectRow";
-import { getProjects } from "../../services/projectService";
+import { getProjects ,createProject, } from "../../services/projectService";
 
 function ManageProjects() {
     const [projects, setProjects] = useState([]);
@@ -27,16 +27,18 @@ function ManageProjects() {
         setProjects(updatedProjects);
     };
 
-    const handleAddProject = (projectData) => {
-        const newProject = {
-            id: Date.now(),
-            ...projectData,
-        };
+    const handleAddProject = async (projectData) => {
+        try {
+            const createdProject =
+                await createProject(projectData);
 
-        setProjects((currentProjects) => [
-            ...currentProjects,
-            newProject,
-        ]);
+            setProjects((currentProjects) => [
+                ...currentProjects,
+                createdProject,
+            ]);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (

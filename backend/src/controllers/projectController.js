@@ -22,5 +22,18 @@ const projects = [
 const getProjects = (req, res) => {
     res.status(200).json(projects);
 };
+const createProject = (req, res) => {
+    const newProject = {
+        id: Date.now(),
+        ...req.body,
+    };
 
-export { getProjects };
+    projects.push(newProject);
+
+    res.status(201).json(newProject);
+};
+
+export {
+    getProjects,
+    createProject,
+};
