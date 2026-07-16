@@ -1,11 +1,18 @@
 import express from "express";
 
-import projectRoutes from "./routes/projectRoutes.js";
+import authRoutes from "./modules/auth/auth.routes.js";
+import projectRoutes from "./modules/projects/project.routes.js";
+
+import errorHandler from "./middleware/error.middleware.js";
 
 const app = express();
 
 app.use(express.json());
 
+app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
+
+// Global Error Handler
+app.use(errorHandler);
 
 export default app;
