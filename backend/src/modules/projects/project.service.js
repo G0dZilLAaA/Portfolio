@@ -5,6 +5,11 @@ import AppError from "../../utils/AppError.js";
 export async function getAllProjects() {
 
     return prisma.project.findMany({
+
+        where: {
+            published: true
+        },
+
         include: {
             technologies: {
                 include: {
@@ -12,10 +17,43 @@ export async function getAllProjects() {
                 }
             }
         },
+
         orderBy: {
             createdAt: "desc"
         }
+
     });
+
+}
+
+export async function getProjectBySlug(slug) {
+
+    const project = await prisma.project.findUnique({
+
+        where: {
+            slug
+        },
+
+        include: {
+            technologies: {
+                include: {
+                    technology: true
+                }
+            }
+        }
+
+    });
+
+    if (!project) {
+
+        throw new AppError(
+            "Project not found",
+            404
+        );
+
+    }
+
+    return project;
 
 }
 
@@ -33,25 +71,31 @@ export async function createProject(data) {
     });
 
     if (existingProject) {
+
         throw new AppError(
-            "Project with same title already exists",
+            "Project already exists",
             409
         );
+
     }
 
     const technologies = await prisma.technology.findMany({
+
         where: {
-            name: {
-                in: data.technologies
+            id: {
+                in: data.technologyIds
             }
         }
+
     });
 
-    if (technologies.length !== data.technologies.length) {
+    if (technologies.length !== data.technologyIds.length) {
+
         throw new AppError(
-            "One or more technologies do not exist",
+            "Invalid technologies",
             400
         );
+
     }
 
     return prisma.project.create({
@@ -78,12 +122,18 @@ export async function createProject(data) {
 
             technologies: {
 
-                create: technologies.map((tech) => ({
+                create: technologies.map(tech => ({
+
                     technology: {
+
                         connect: {
+
                             id: tech.id
+
                         }
+
                     }
+
                 }))
 
             }
@@ -93,9 +143,13 @@ export async function createProject(data) {
         include: {
 
             technologies: {
+
                 include: {
+
                     technology: true
+
                 }
+
             }
 
         }

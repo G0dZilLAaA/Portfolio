@@ -17,5 +17,5 @@ export const createProjectSchema = z.object({
 
     published: z.boolean().optional(),
 
-    technologies: z.array(z.string()).min(1)
+    technologyIds: z.array(z.string().uuid()).min(1)
 });

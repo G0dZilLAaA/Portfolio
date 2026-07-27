@@ -1,30 +1,13 @@
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import AdminLayout from "../layouts/AdminLayout";
-import PortfolioLayout from "../layouts/PortfolioLayout";
+import Home from "../pages/Home";
 
-import Dashboard from "../pages/admin/Dashboard";
-import ManageProjects from "../pages/admin/ManageProjects";
-
-import About from "../pages/portfolio/About";
-import Home from "../pages/portfolio/Home";
-import Projects from "../pages/portfolio/Projects";
-
-function AppRoutes() {
+export default function AppRoutes() {
     return (
-        <Routes>
-            <Route element={<PortfolioLayout />}>
+        <BrowserRouter>
+            <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/projects" element={<Projects />} />
-            </Route>
-
-            <Route path="/admin" element={<AdminLayout />}>
-                <Route path="dashboard" element={<Dashboard />} />
-                <Route path="projects" element={<ManageProjects />} />
-            </Route>
-        </Routes>
+            </Routes>
+        </BrowserRouter>
     );
 }
-
-export default AppRoutes;
