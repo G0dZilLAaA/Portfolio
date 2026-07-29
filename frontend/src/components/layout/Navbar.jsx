@@ -1,96 +1,99 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const navItems = [
-    { title: "About", id: "about" },
-    { title: "Skills", id: "skills" },
-    { title: "Experience", id: "experience" },
-    { title: "Projects", id: "projects" },
-    { title: "Contact", id: "contact" },
+  { title: "About", id: "about" },
+  { title: "Skills", id: "skills" },
+  { title: "Experience", id: "experience" },
+  { title: "Projects", id: "projects" },
+  { title: "Contact", id: "contact" },
 ];
 
 export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
-    const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => {
+    const sectionIds = ["about", "skills", "experience", "projects", "contact"];
 
-    function scrollToSection(id) {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
 
+      const currentSection = sectionIds.find((id) => {
         const section = document.getElementById(id);
+        if (!section) return false;
+        return window.scrollY >= section.offsetTop - 140 && window.scrollY < section.offsetTop + section.offsetHeight - 140;
+      });
 
-        if (!section) return;
+      setActiveSection(currentSection || "home");
+    };
 
-        section.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-        });
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-        setMenuOpen(false);
-    }
+  function scrollToSection(id) {
+    const section = document.getElementById(id);
+    if (!section) return;
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+    setMenuOpen(false);
+  }
 
-    return (
+  return (
+    <nav className={`navbar-shell ${scrolled ? "scrolled" : "transparent"}`}>
+      <div className="navbar-inner">
+        <button
+          type="button"
+          className="nav-brand"
+          onClick={() =>
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            })
+          }
+        >
+          DeveloperHub
+        </button>
 
-        <nav className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
+        <div className="nav-links hidden md:flex">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => scrollToSection(item.id)}
+              className={`nav-link ${activeSection === item.id ? "active" : ""}`}
+            >
+              {item.title}
+            </button>
+          ))}
+        </div>
 
-            <div className="mx-auto flex max-w-7xl items-center justify-between px-8 py-5">
+        <button
+          type="button"
+          className="nav-toggle md:hidden"
+          onClick={() => setMenuOpen((current) => !current)}
+          aria-expanded={menuOpen}
+          aria-label="Open navigation menu"
+        >
+          ☰
+        </button>
+      </div>
 
-                <h1
-                    className="cursor-pointer text-2xl font-bold text-white"
-                    onClick={() =>
-                        window.scrollTo({
-                            top: 0,
-                            behavior: "smooth",
-                        })
-                    }
-                >
-                    DeveloperHub
-                </h1>
-
-                <div className="hidden gap-8 md:flex">
-
-                    {navItems.map((item) => (
-
-                        <button
-                            key={item.id}
-                            onClick={() => scrollToSection(item.id)}
-                            className="text-slate-300 transition hover:text-indigo-400"
-                        >
-                            {item.title}
-                        </button>
-
-                    ))}
-
-                </div>
-
-                <button
-                    className="text-white md:hidden"
-                    onClick={() => setMenuOpen(!menuOpen)}
-                >
-                    ☰
-                </button>
-
-            </div>
-
-            {menuOpen && (
-
-                <div className="border-t border-slate-800 bg-slate-900 md:hidden">
-
-                    {navItems.map((item) => (
-
-                        <button
-                            key={item.id}
-                            onClick={() => scrollToSection(item.id)}
-                            className="block w-full border-b border-slate-800 px-8 py-4 text-left text-white"
-                        >
-                            {item.title}
-                        </button>
-
-                    ))}
-
-                </div>
-
-            )}
-
-        </nav>
-
-    );
-
+      {menuOpen && (
+        <div className="bg-surface-strong border-t border-white/10 md:hidden">
+          {navItems.map((item) => (
+            <button
+              type="button"
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className="block w-full border-b border-white/10 px-6 py-4 text-left text-primary"
+            >
+              {item.title}
+            </button>
+          ))}
+        </div>
+      )}
+    </nav>
+  );
 }
