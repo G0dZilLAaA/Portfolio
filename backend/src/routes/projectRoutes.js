@@ -1,10 +1,25 @@
-import express from "express";
+import { Router } from "express";
 
-import { getProjects , createProject } from "../controllers/projectController.js";
+import {
+    getProjects,
+    getProjectBySlug,
+    createProject
+} from "./project.controller.js";
 
-const router = express.Router();
+import { authenticate } from "../../middleware/auth.middleware.js";
+import { authorize } from "../../middleware/authorize.middleware.js";
+
+const router = Router();
 
 router.get("/", getProjects);
-router.post("/", createProject);
+
+router.get("/:slug", getProjectBySlug);
+
+router.post(
+    "/",
+    authenticate,
+    authorize("ADMIN"),
+    createProject
+);
 
 export default router;

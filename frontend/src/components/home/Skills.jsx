@@ -16,12 +16,12 @@ export default function Skills() {
       <div className="section-heading fade-in-up">
         <h2 className="type-heading">Technical Skills</h2>
         <div className="section-divider" />
-        <p className="type-body">Technologies and tools used to design, develop, deploy, and maintain scalable applications with confidence.</p>
+        <p className="type-body">A focused set of technologies and tools I use to build modern full-stack applications.</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {skillCategories.map((category) => (
-          <div key={category.title} className="skill-card">
+          <div key={category.title} className="skill-card hover-float">
             <h3 className="type-card-title mb-4">{category.title}</h3>
             <div className="flex flex-wrap gap-3">
               {category.data.map((skill) => (

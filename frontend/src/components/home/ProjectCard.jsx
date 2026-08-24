@@ -1,9 +1,11 @@
+import { Link as RouterLink } from "react-router-dom";
+
 export default function ProjectCard({ project }) {
   return (
-    <article className="card-panel overflow-hidden hover-float">
+    <RouterLink to={`/projects/${project.slug}`} className="card-panel overflow-hidden hover-float block group">
       <div className="h-56 overflow-hidden rounded-[1.5rem] bg-slate-800">
         <img
-          src="https://placehold.co/600x350/1e293b/ffffff?text=Project+Preview"
+          src={project.thumbnail || "https://placehold.co/600x350/1e293b/ffffff?text=Project+Preview"}
           alt={project.title}
           className="h-full w-full object-cover"
         />
@@ -20,24 +22,9 @@ export default function ProjectCard({ project }) {
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3">
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="btn btn-secondary"
-          >
-            GitHub
-          </a>
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="btn btn-primary"
-          >
-            Live Demo
-          </a>
+          <span className="btn btn-secondary">View Details</span>
         </div>
       </div>
-    </article>
+    </RouterLink>
   );
 }

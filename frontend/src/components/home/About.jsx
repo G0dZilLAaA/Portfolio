@@ -2,6 +2,11 @@ import portfolio from "../../data/portfolio";
 
 export default function About() {
   const { about, education, skills } = portfolio;
+  const strengths = [
+    "Clean architecture and component-driven design",
+    "API-first backend engineering with Express and Prisma",
+    "Responsive interfaces built for accessibility and clarity",
+  ];
   const stats = [
     { label: "Languages", value: skills.languages.length },
     { label: "Frontend", value: skills.frontend.length },
@@ -17,27 +22,27 @@ export default function About() {
         <p className="type-body">{about.description}</p>
       </div>
 
-      <div className="section-inner lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+      <div className="section-inner lg:grid lg:grid-cols-[1.1fr_0.9fr] lg:items-start gap-6">
         <div className="glass-panel p-10">
-          <div className="flex h-full flex-col justify-between gap-8">
-            <div>
-              <span className="badge-pill">Education</span>
-              <h3 className="type-card-title mt-5">{education.degree}</h3>
-              <p className="type-body mt-4">{education.college}</p>
-            </div>
-            <div>
-              <span className="badge-pill">Career Objective</span>
-              <p className="type-body mt-4">
-                Passionate about building scalable web applications, backend systems and AI-powered software while continuously improving software engineering skills.
-              </p>
-            </div>
+          <span className="badge-pill">Academic profile</span>
+          <h3 className="type-card-title mt-5">{education.degree}</h3>
+          <p className="type-body mt-4">{education.college}</p>
+          <div className="mt-8 space-y-4">
+            {strengths.map((item) => (
+              <div key={item} className="rounded-3xl border border-white/10 p-5">
+                <p className="type-card-copy">{item}</p>
+              </div>
+            ))}
           </div>
         </div>
 
         <div className="grid gap-6">
           <div className="card-panel p-10">
-            <h3 className="type-card-title">Professional Summary</h3>
-            <p className="type-body mt-4">Experienced in creating robust, maintainable applications using React, Tailwind CSS, Express.js, Prisma, PostgreSQL and modern authentication flows with JWT.</p>
+            <span className="badge-pill">Career objective</span>
+            <h3 className="type-card-title mt-4">Building scalable software with an emphasis on usability.</h3>
+            <p className="type-body mt-4">
+              I enjoy architecting applications that are maintainable, visually refined, and connected to real-world backend workflows.
+            </p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">

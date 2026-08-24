@@ -29,7 +29,9 @@ export default function Footer() {
           </a>
         </div>
       </div>
-      <div className="type-meta text-center mt-6 text-muted-soft">© {new Date().getFullYear()} Mohit Kumawat. Built for readability and professional presentation.</div>
+      <div className="type-meta text-center mt-6 text-muted-soft">
+        © {new Date().getFullYear()} Mohit Kumawat. Built with a refined design system and responsive UI.
+      </div>
     </footer>
   );
 }

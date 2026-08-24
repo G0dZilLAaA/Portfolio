@@ -24,6 +24,19 @@ export async function getProjects(req, res, next) {
 
 }
 
+export async function getProjectBySlug(req, res, next) {
+    try {
+        const project = await projectService.getProjectBySlug(req.params.slug);
+
+        return res.json({
+            success: true,
+            data: project,
+        });
+    } catch (err) {
+        next(err);
+    }
+}
+
 export async function createProject(req, res, next) {
 
     try {

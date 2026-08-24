@@ -9,15 +9,14 @@ export default function Hero() {
   const [activeRole, setActiveRole] = useState(roles[0]);
 
   useEffect(() => {
-    const cycle = setInterval(() => {
+    const interval = setInterval(() => {
       setActiveRole((current) => {
-        const currentIndex = roles.indexOf(current);
-        const nextIndex = (currentIndex + 1) % roles.length;
+        const nextIndex = (roles.indexOf(current) + 1) % roles.length;
         return roles[nextIndex] || roles[0];
       });
     }, 3200);
 
-    return () => clearInterval(cycle);
+    return () => clearInterval(interval);
   }, [roles]);
 
   function scrollTo(id) {
@@ -31,15 +30,15 @@ export default function Hero() {
       <div className="section-block">
         <div className="section-inner hero-grid">
           <div className="hero-copy fade-in-up">
-            <span className="hero-eyebrow">Hello, I&apos;m {personal.name}</span>
+            <span className="hero-eyebrow">Design-driven full-stack engineering</span>
             <h1 className="type-display">{personal.name}</h1>
             <p className="type-heading">
-              <span className="text-primary">{activeRole}</span> delivering elegant full-stack solutions with React, Node.js, Prisma,
-              PostgreSQL and JWT.
+              <span className="text-primary">{activeRole}</span> crafting polished React applications, reliable REST APIs,
+              and secure authentication flows.
             </p>
             <p className="type-body">
-              I build polished, production-ready web experiences that balance modern design,
-              strong architecture, and scalable backend integrations for real-world products.
+              I combine modern UI, strong backend architecture, and clean workflows to deliver production-ready portfolio projects
+              with real-world impact.
             </p>
 
             <div className="hero-actions">
@@ -61,17 +60,13 @@ export default function Hero() {
           </div>
 
           <div className="hero-visual slide-in">
-            <div className="hero-badge">Professional Portfolio</div>
+            <div className="hero-badge">Portfolio Spotlight</div>
             <div className="hero-illustration">
-              <img
-                src={profilePhoto}
-                alt={personal.name}
-                className="h-full w-full rounded-[2rem] object-cover"
-              />
+              <img src={profilePhoto} alt={personal.name} />
             </div>
             <div className="hero-card">
-              <span>Featured strength</span>
-              <h3>Clean architecture, responsive interfaces, and polished user experiences.</h3>
+              <span>Core focus</span>
+              <h3>High-quality UI, scalable backend services, and polished deployment-ready software.</h3>
             </div>
           </div>
         </div>

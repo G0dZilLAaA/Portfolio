@@ -28,7 +28,7 @@ export default function FeaturedProjects() {
       <div className="section-heading fade-in-up">
         <h2 className="type-heading">Featured Projects</h2>
         <div className="section-divider" />
-        <p className="type-body">Some of my recent projects built using modern technologies, backend APIs, and thoughtful user experience.</p>
+        <p className="type-body">Recent projects that demonstrate full-stack delivery, API integration, and polished UI design.</p>
       </div>
 
       {loading ? (
